@@ -1,0 +1,12 @@
+{
+    "name": "measures_converter",
+    "short_name": "measures_converter",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "A Flutter app that converts values between metric and imperial units of length.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": []
+}
