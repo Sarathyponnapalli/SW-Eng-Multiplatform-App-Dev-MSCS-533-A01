@@ -15,5 +15,5 @@ export PATH="$PATH:$HOME/flutter/bin"
 flutter config --enable-web
 flutter doctor
 
-cd "$(dirname "$0")/../assignment 1"
+cd "$(dirname "$0")/.."
 flutter pub get

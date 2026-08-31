@@ -7,34 +7,36 @@ inches, feet, yards, miles).
 ## Project layout
 
 ```
-assignment 1/
-├── lib/main.dart              # App source (UI + conversion logic)
-├── pubspec.yaml                # Dependencies / project metadata
+Assignment_1/
+├── .devcontainer/               # Codespaces setup (installs Flutter automatically)
+├── lib/main.dart                # App source (UI + conversion logic)
+├── pubspec.yaml                 # Dependencies / project metadata
 ├── android/app/src/main/AndroidManifest.xml
 ├── web/                         # Web target (index.html, manifest.json)
-├── test/widget_test.dart       # Widget tests
-└── target-layout-reference.png # Reference layout from the assignment brief
+├── test/widget_test.dart        # Widget tests
+└── Assignment_1_Submission.docx # Submission template (add your screenshot, then submit)
 ```
 
 ## Running it from GitHub Codespaces (browser only, no local install needed)
 
 1. On the repository page, click **Code → Codespaces → Create codespace on
-   `claude/flutter-conversion-app-gysxwm`**. This repo includes a
-   `.devcontainer/devcontainer.json` that runs
-   `.devcontainer/setup-flutter.sh` automatically when the codespace
-   builds, cloning the Flutter stable SDK and running `flutter pub get`
-   for this project. The first build takes a few minutes.
-2. Once setup finishes, open a terminal (it should already have Flutter on
+   `claude/flutter-conversion-app-gysxwm`**. Since the devcontainer config
+   lives inside this folder, Codespaces will ask which configuration to
+   use — pick **Flutter Codespace (Assignment_1)**. It runs
+   `.devcontainer/setup-flutter.sh` automatically, cloning the Flutter
+   stable SDK and running `flutter pub get`. The first build takes a few
+   minutes.
+2. Once setup finishes, open a terminal (Flutter should already be on
    `PATH`; if not, run `export PATH="$PATH:$HOME/flutter/bin"`) and run:
    ```bash
-   cd "assignment 1"
+   cd Assignment_1
    flutter run -d web-server --web-port 8080
    ```
 3. Codespaces will prompt you to open the forwarded port `8080` — open it
    in a new browser tab to use the running app.
-4. Take a screenshot of that browser tab for your assignment submission
-   (Word doc + GitHub link), replacing/supplementing
-   `target-layout-reference.png`.
+4. Take a screenshot of that browser tab and insert it into
+   `Assignment_1_Submission.docx` where marked, then submit that Word doc
+   alongside the GitHub link.
 
 ## How the conversion works
 
@@ -47,6 +49,6 @@ needing a separate formula for every possible unit pair.
 ## Tests
 
 ```bash
-cd "assignment 1"
+cd Assignment_1
 flutter test
 ```
