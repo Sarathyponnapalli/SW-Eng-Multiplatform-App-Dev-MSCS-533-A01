@@ -13,19 +13,17 @@ Assignment_1/
 ├── pubspec.yaml                 # Dependencies / project metadata
 ├── android/app/src/main/AndroidManifest.xml
 ├── web/                         # Web target (index.html, manifest.json)
-├── test/widget_test.dart        # Widget tests
-└── Assignment_1_Submission.docx # Submission template (add your screenshot, then submit)
+└── test/widget_test.dart        # Widget tests
 ```
 
 ## Running it from GitHub Codespaces (browser only, no local install needed)
 
 1. On the repository page, click **Code → Codespaces → Create codespace on
-   `claude/flutter-conversion-app-gysxwm`**. Since the devcontainer config
-   lives inside this folder, Codespaces will ask which configuration to
-   use — pick **Flutter Codespace (Assignment_1)**. It runs
-   `.devcontainer/setup-flutter.sh` automatically, cloning the Flutter
-   stable SDK and running `flutter pub get`. The first build takes a few
-   minutes.
+   main**. Since the devcontainer config lives inside this folder,
+   Codespaces will ask which configuration to use — pick **Flutter
+   Codespace (Assignment_1)**. It runs `.devcontainer/setup-flutter.sh`
+   automatically, cloning the Flutter stable SDK and running
+   `flutter pub get`. The first build takes a few minutes.
 2. Once setup finishes, open a terminal (Flutter should already be on
    `PATH`; if not, run `export PATH="$PATH:$HOME/flutter/bin"`) and run:
    ```bash
@@ -34,9 +32,6 @@ Assignment_1/
    ```
 3. Codespaces will prompt you to open the forwarded port `8080` — open it
    in a new browser tab to use the running app.
-4. Take a screenshot of that browser tab and insert it into
-   `Assignment_1_Submission.docx` where marked, then submit that Word doc
-   alongside the GitHub link.
 
 ## How the conversion works
 
