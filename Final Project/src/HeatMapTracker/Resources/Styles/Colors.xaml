@@ -5,12 +5,26 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <!--
+        Brand palette: deep navy for chrome, "heat" orange as the accent.
+        The heat-map circles themselves use the blue → red ramp in HeatGradient.
+    -->
+    <Color x:Key="BrandNavy">#14213D</Color>
+    <Color x:Key="BrandNavyDeep">#0B132B</Color>
+    <Color x:Key="HeatOrange">#FF6B35</Color>
+    <Color x:Key="HeatAmber">#FCA311</Color>
+    <Color x:Key="CardLight">#F7FFFFFF</Color>
+    <Color x:Key="CardDark">#F01C2541</Color>
+    <Color x:Key="CardCaptionLight">#5C677D</Color>
+    <Color x:Key="CardCaptionDark">#AAB4C8</Color>
+    <Color x:Key="LiveGreen">#2ECC71</Color>
+
+    <Color x:Key="Primary">#14213D</Color>
+    <Color x:Key="PrimaryDark">#FCA311</Color>
+    <Color x:Key="PrimaryDarkText">#0B132B</Color>
+    <Color x:Key="Secondary">#E5E8EF</Color>
+    <Color x:Key="SecondaryDarkText">#FCA311</Color>
+    <Color x:Key="Tertiary">#FF6B35</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>

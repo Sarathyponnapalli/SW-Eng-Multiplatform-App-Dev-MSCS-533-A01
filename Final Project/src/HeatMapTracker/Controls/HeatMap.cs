@@ -101,12 +101,35 @@ public class HeatMap : Map
         var minRadius = Math.Max(HeatGradient.DefaultMinRadiusMeters, viewRadiusMeters * ZoomMinRadiusFactor);
         var maxRadius = Math.Max(HeatGradient.DefaultMaxRadiusMeters, viewRadiusMeters * ZoomMaxRadiusFactor);
 
-        foreach (var cell in HeatmapBuilder.Build(Points, cellSize))
+        foreach (var cell in HeatmapBuilder.Build(PointsNearView(), cellSize))
         {
             var circle = CreateCircle(cell, minRadius, maxRadius);
             _heatCircles.Add(circle);
             MapElements.Add(circle);
         }
+    }
+
+    /// <summary>
+    /// Returns the points inside (or just around) the visible region. Intensity is normalized against
+    /// the busiest cell, so restricting to the view makes the hottest place <em>on screen</em> red,
+    /// instead of every visible cell looking cool because of a busier place elsewhere in the history.
+    /// </summary>
+    private IEnumerable<LocationPoint> PointsNearView()
+    {
+        var points = Points;
+        var region = VisibleRegion;
+        if (points is null || region is null)
+        {
+            return points ?? [];
+        }
+
+        // MapSpan degrees are the full height/width; take half, plus 50% margin for panning.
+        var latitudeReach = region.LatitudeDegrees * 0.75;
+        var longitudeReach = region.LongitudeDegrees * 0.75;
+        var center = region.Center;
+        return points.Where(p =>
+            Math.Abs(p.Latitude - center.Latitude) <= latitudeReach &&
+            Math.Abs(p.Longitude - center.Longitude) <= longitudeReach);
     }
 
     /// <inheritdoc />

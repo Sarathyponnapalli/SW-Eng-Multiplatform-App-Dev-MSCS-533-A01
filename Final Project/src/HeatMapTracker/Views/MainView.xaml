@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- The single screen of the app: a full-screen heat map with a small tracking status overlay. -->
+<!--
+    The single screen of the app: a full-screen heat map with
+      - a heat legend (top left),
+      - round action buttons (fit history, clear, start/pause),
+      - a floating stats card (bottom).
+-->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:HeatMapTracker.Controls"
@@ -8,32 +13,149 @@
              x:DataType="vm:MainViewModel"
              Title="MainView">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Clear"
-                     Command="{Binding ClearHistoryCommand}"
-                     SemanticProperties.Description="Delete all saved locations" />
-    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <!-- Round floating action button. -->
+        <Style x:Key="Fab" TargetType="ImageButton">
+            <Setter Property="WidthRequest" Value="52" />
+            <Setter Property="HeightRequest" Value="52" />
+            <Setter Property="CornerRadius" Value="26" />
+            <Setter Property="Padding" Value="14" />
+            <Setter Property="BackgroundColor" Value="{StaticResource BrandNavy}" />
+            <Setter Property="Shadow">
+                <Shadow Brush="Black" Opacity="0.3" Radius="10" Offset="0,4" />
+            </Setter>
+        </Style>
+
+        <Style x:Key="StatValue" TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource BrandNavy}, Dark={StaticResource White}}" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="StatCaption" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource CardCaptionLight}, Dark={StaticResource CardCaptionDark}}" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
 
     <Grid>
-        <!-- HeatMap extends the .NET MAUI Maps control; see Controls/HeatMap.cs. -->
+        <!-- HeatMap extends the .NET MAUI Maps control with a heat-map layer; see Controls/HeatMap.cs. -->
         <controls:HeatMap x:Name="TrackingMap"
                           MapType="Street"
                           IsShowingUser="True"
                           Points="{Binding Points}" />
 
-        <!-- Status overlay, e.g. "Tracking · 42 points". -->
+        <!-- Heat legend: explains what the colors mean. -->
         <Border Margin="12"
-                Padding="12,6"
+                Padding="12,8"
                 HorizontalOptions="Start"
                 VerticalOptions="Start"
-                BackgroundColor="#CC000000"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                 StrokeThickness="0"
                 StrokeShape="RoundRectangle 12">
-            <Label Text="{Binding StatusText}"
-                   TextColor="White"
-                   FontSize="14"
-                   SemanticProperties.Description="Tracking status" />
+            <Border.Shadow>
+                <Shadow Brush="Black" Opacity="0.2" Radius="8" Offset="0,2" />
+            </Border.Shadow>
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Time spent" Style="{StaticResource StatCaption}" HorizontalTextAlignment="Start" />
+                <Border HeightRequest="8" WidthRequest="130" StrokeThickness="0" StrokeShape="RoundRectangle 4">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#0000FF" Offset="0" />
+                            <GradientStop Color="#00FF00" Offset="0.33" />
+                            <GradientStop Color="#FFFF00" Offset="0.66" />
+                            <GradientStop Color="#FF0000" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+                <Grid ColumnDefinitions="*,*">
+                    <Label Text="Less" Style="{StaticResource StatCaption}" HorizontalTextAlignment="Start" />
+                    <Label Grid.Column="1" Text="More" Style="{StaticResource StatCaption}" HorizontalTextAlignment="End" />
+                </Grid>
+            </VerticalStackLayout>
+            <SemanticProperties.Description>Legend: blue means less time spent, red means more time spent.</SemanticProperties.Description>
         </Border>
+
+        <!-- Bottom overlay: action buttons above the stats card. -->
+        <VerticalStackLayout VerticalOptions="End" Margin="16,0,16,24" Spacing="14">
+
+            <HorizontalStackLayout HorizontalOptions="End" Spacing="12">
+                <ImageButton Style="{StaticResource Fab}"
+                             Source="ic_recenter.png"
+                             Clicked="OnFitHistoryClicked"
+                             SemanticProperties.Description="Show whole history" />
+                <ImageButton Style="{StaticResource Fab}"
+                             Source="ic_delete.png"
+                             Clicked="OnClearClicked"
+                             SemanticProperties.Description="Delete all saved locations" />
+                <ImageButton Style="{StaticResource Fab}"
+                             BackgroundColor="{StaticResource HeatOrange}"
+                             WidthRequest="60" HeightRequest="60" CornerRadius="30" Padding="16"
+                             Source="ic_play.png"
+                             Command="{Binding ToggleTrackingCommand}"
+                             SemanticProperties.Description="Start or pause tracking">
+                    <ImageButton.Triggers>
+                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsTracking}" Value="True">
+                            <Setter Property="Source" Value="ic_pause.png" />
+                        </DataTrigger>
+                    </ImageButton.Triggers>
+                </ImageButton>
+            </HorizontalStackLayout>
+
+            <!-- Stats card. -->
+            <Border Padding="18,14"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.25" Radius="16" Offset="0,4" />
+                </Border.Shadow>
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="12">
+
+                    <!-- Live status row: pulsing dot · status · point count. -->
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                        <Ellipse x:Name="LiveDot"
+                                 WidthRequest="10" HeightRequest="10"
+                                 VerticalOptions="Center"
+                                 Fill="{StaticResource Gray400}">
+                            <Ellipse.Triggers>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding IsTracking}" Value="True">
+                                    <Setter Property="Fill" Value="{StaticResource LiveGreen}" />
+                                </DataTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+                        <Label Grid.Column="1"
+                               Text="{Binding StatusText}"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="15"
+                               VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource BrandNavy}, Dark={StaticResource White}}" />
+                        <Label Grid.Column="2"
+                               Text="{Binding PointCountText}"
+                               Style="{StaticResource StatCaption}"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                    <!-- Three headline stats. -->
+                    <Grid Grid.Row="1" ColumnDefinitions="*,*,*">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding DistanceText}" Style="{StaticResource StatValue}" />
+                            <Label Text="Distance" Style="{StaticResource StatCaption}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="{Binding TrackedTimeText}" Style="{StaticResource StatValue}" />
+                            <Label Text="Tracked" Style="{StaticResource StatCaption}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="2">
+                            <Label Text="{Binding LongestStopText}" Style="{StaticResource StatValue}" />
+                            <Label Text="Longest stop" Style="{StaticResource StatCaption}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
     </Grid>
 
 </ContentPage>
