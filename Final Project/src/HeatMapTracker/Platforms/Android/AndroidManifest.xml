@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Android manifest for Heat Map Tracker (com.mscs533.heatmaptracker).
+	The package name, version and SDK levels are generated from HeatMapTracker.csproj.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!--
+		allowBackup="false": the app stores the user's location history, which is personal data.
+		Keep it on the device instead of including it in cloud backups.
+	-->
+	<application
+		android:allowBackup="false"
+		android:icon="@mipmap/appicon"
+		android:roundIcon="@mipmap/appicon_round"
+		android:supportsRtl="true">
+
+		<!--
+			Google Maps SDK for Android API key, used by the .NET MAUI Maps control.
+			${mapsApiKey} is a build-time placeholder filled from the git-ignored secrets.props
+			(see secrets.props.example). The real key is never committed to source control.
+		-->
+		<meta-data
+			android:name="com.google.android.geo.API_KEY"
+			android:value="${mapsApiKey}" />
+	</application>
+
+	<!-- Location: precise (GPS) and approximate (network) position while the app is in use. -->
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+	<!-- Network: required by Google Maps to download map tiles. -->
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+	<!-- The app works without GPS hardware (network location), so do not filter it out of stores. -->
+	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
+</manifest>

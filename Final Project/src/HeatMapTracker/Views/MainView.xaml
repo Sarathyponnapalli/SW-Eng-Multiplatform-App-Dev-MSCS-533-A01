@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- The single screen of the app: a full-screen heat map with a small tracking status overlay. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:HeatMapTracker.Controls"
+             xmlns:vm="clr-namespace:HeatMapTracker.ViewModels"
+             x:Class="HeatMapTracker.Views.MainView"
+             x:DataType="vm:MainViewModel"
+             Title="MainView">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Clear"
+                     Command="{Binding ClearHistoryCommand}"
+                     SemanticProperties.Description="Delete all saved locations" />
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <!-- HeatMap extends the .NET MAUI Maps control; see Controls/HeatMap.cs. -->
+        <controls:HeatMap x:Name="TrackingMap"
+                          MapType="Street"
+                          IsShowingUser="True"
+                          Points="{Binding Points}" />
+
+        <!-- Status overlay, e.g. "Tracking · 42 points". -->
+        <Border Margin="12"
+                Padding="12,6"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                BackgroundColor="#CC000000"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 12">
+            <Label Text="{Binding StatusText}"
+                   TextColor="White"
+                   FontSize="14"
+                   SemanticProperties.Description="Tracking status" />
+        </Border>
+    </Grid>
+
+</ContentPage>
