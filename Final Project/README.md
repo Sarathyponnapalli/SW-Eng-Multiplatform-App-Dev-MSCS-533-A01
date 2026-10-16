@@ -8,6 +8,17 @@ MSCS-533 Software Engineering for Multiplatform App Development: Final Project.
   <img src="docs/screenshot.png" alt="Heat Map Tracker on Android showing a drive with a red hot spot at the destination" width="320" />
 </p>
 
+## Try it (no build needed)
+
+A ready-to-install Android APK, with the map already configured, is attached to the latest release:
+
+**[Download HeatMapTracker.apk from Releases](https://github.com/Sarathyponnapalli/SW-Eng-Multiplatform-App-Dev-MSCS-533-A01/releases/latest)**
+
+1. Start an Android emulator (Android 5.0 / API 21 or later, with a **Google APIs** or **Google Play** image so Google Maps works), or use an Android phone.
+2. **Emulator:** drag the `.apk` file onto the emulator window. **Phone:** open the file and allow installing from this source.
+3. Open **Heat Map Tracker** and tap **Allow** for location.
+4. To see the heat map build, open the emulator's **⋯ Extended controls → Location → Routes**, play a route, and let it sit at the end for a minute.
+
 ## Features
 
 - **Location tracking**: records your position every 5 seconds while the app is open. Inaccurate readings (worse than 50 m) are discarded.
