@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HeatMapTracker.Core/HeatMapTracker.Core.csproj" />
+    <Project Path="src/HeatMapTracker/HeatMapTracker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/HeatMapTracker.Core.Tests/HeatMapTracker.Core.Tests.csproj" />
+  </Folder>
+</Solution>

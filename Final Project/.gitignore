@@ -1,0 +1,25 @@
+# Build outputs
+bin/
+obj/
+TestResults/
+*.apk
+*.aab
+
+# IDE / user-specific
+.vs/
+*.user
+*.suo
+
+# Secrets: the Google Maps API key lives here and must never be committed.
+# Copy src/HeatMapTracker/secrets.props.example to secrets.props locally.
+secrets.props
+
+# Local planning / assignment notes (not part of the app)
+.claude/
+plans/
+instructions.md
+image.png
+
+# OS-generated
+.DS_Store
+Thumbs.db

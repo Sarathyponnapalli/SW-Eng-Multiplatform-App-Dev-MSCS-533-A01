@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Splash screen: the app's heat pin on the navy splash background (color set in the .csproj). -->
+<svg width="456" height="456" viewBox="0 0 456 456" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <radialGradient id="heat" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#FF2D2D"/>
+            <stop offset="0.45" stop-color="#FF6B35"/>
+            <stop offset="0.8" stop-color="#FCA311"/>
+            <stop offset="1" stop-color="#FFE066"/>
+        </radialGradient>
+        <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#FF6B35" stop-opacity="0.55"/>
+            <stop offset="1" stop-color="#FF6B35" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+    <circle cx="228" cy="214" r="170" fill="url(#glow)"/>
+    <path d="M228 70c-70 0-126 55-126 123 0 92 126 221 126 221s126-129 126-221c0-68-56-123-126-123z" fill="#FFFFFF"/>
+    <circle cx="228" cy="193" r="65" fill="url(#heat)"/>
+</svg>
